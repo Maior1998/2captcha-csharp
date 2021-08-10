@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+
 using TwoCaptcha.Captcha;
 using TwoCaptcha.Exceptions;
+
 using TimeoutException = TwoCaptcha.Exceptions.TimeoutException;
 
 namespace TwoCaptcha
@@ -232,6 +234,9 @@ namespace TwoCaptcha
         public async Task<double> Balance()
         {
             string response = await Res("getbalance");
+            response = response
+                .Replace(".", System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator)
+                .Replace(",", System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator);
             return Convert.ToDouble(response);
         }
 
